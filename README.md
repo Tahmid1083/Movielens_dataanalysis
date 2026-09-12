@@ -1,7 +1,38 @@
-"# Movielens_dataanalysis" 
-A Hadoop-based data processing project using the MovieLens 1M dataset. This repository demonstrates how to extract valuable movie and user insights from millions of rating events using both Java MapReduce and Apache Pig workflows designed to run in a Hadoop environment.
-Dataset File,Main Fields,Records,Description
-movies.csv,"movieId, title, genres","3,883 movies",Movie metadata and pipe-delimited genres
-ratings.csv,"userId, movieId, rating, timestamp","1,000,209 ratings",5-point scale ratings with Unix timestamps (2000–2003)
-users.csv,"userId, gender, age, occupation, zip","6,040 users",Coded demographic details
-Project Objectives & Implementation1. Java MapReduce ProgramsAverageRating.java: Maps movie IDs to ratings and reduces each group to compute an average rating and total count.GenreCounter.java: Splits pipe-delimited genre strings to count individual genre frequencies, utilizing a combiner to reduce intermediate shuffle traffic.HighRatingFilter.java: Performs map-only filtering to emit records with a score of 4.0 or higher.UserRatingJoin.java: Loads users.csv via Hadoop's Distributed Cache to enrich individual ratings with user demographic information.2. Apache Pig Scriptstop_movies.pig: Calculates movie averages, filters for movies with $>5$ ratings, joins titles, and stores the top 10 movies by average rating (/movielens/pig_out1).genre_breakdown.pig: Joins movies and ratings, tokenizes genres, and stores total rating volume and average rating per genre (/movielens/pig_out3).demographics_analysis.pig: Joins users and ratings to aggregate average ratings and rating counts grouped by gender and age group (/movielens/pig_out2_age&gender).rating_trends.pig: Converts Unix timestamps to calendar years to measure annual review volume and average ratings (/movielens/pig_out_trends).user_behavior.pig: Calculates per-user review counts and average ratings, subsequently segmenting users into engagement tiers (casual, moderate, and heavy reviewers) (/movielens/pig_out_user_segments).
+# MovieLens Data Analysis
+
+A Hadoop-based data analysis project using the **MovieLens 1M dataset**.
+
+The project uses **Java MapReduce** and **Apache Pig** to analyze movie ratings, genres, users, and rating trends.
+
+## Dataset
+
+| File          |   Records | Description                  |
+| ------------- | --------: | ---------------------------- |
+| `movies.csv`  |     3,883 | Movie information and genres |
+| `ratings.csv` | 1,000,209 | User movie ratings           |
+| `users.csv`   |     6,040 | User demographic information |
+
+## MapReduce Programs
+
+* **AverageRating.java** — Calculates average movie ratings.
+* **GenreCounter.java** — Counts movie genres.
+* **HighRatingFilter.java** — Filters ratings of 4.0 or higher.
+* **UserRatingJoin.java** — Combines ratings with user information.
+
+## Apache Pig
+
+* **top_movies.pig** — Finds top-rated movies.
+* **genre_breakdown.pig** — Analyzes movie genres.
+* **demographics_analysis.pig** — Analyzes ratings by gender and age.
+* **rating_trends.pig** — Analyzes rating trends over the years.
+* **user_behavior.pig** — Analyzes user rating behavior.
+
+## Technologies
+
+* Java
+* Apache Hadoop
+* MapReduce
+* Apache Pig
+* HDFS
+* MovieLens 1M Dataset
+Datasetlink:https://grouplens.org/datasets/movielens/1m/
